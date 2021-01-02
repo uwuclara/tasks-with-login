@@ -3,73 +3,140 @@
 session_start();
 
 //check if logged
-if(!isset($_SESSION['user_id'])){
+if(!isset($_SESSION['user_id']))
+{
+
     header("Location: /login.php");
+
 }
 
 //check if task been selected
-if(!isset($_POST['task_id'])){
+if(!isset($_POST['task_id']))
+{
+
     header("Location: /member.php");
+
 }
 
 //lib
-require_once('db.php');
+require_once __DIR__ ."/db.php";
 
-try{
+try
+{
+
 	//call a class
 	$task = new Task();
+
 	//fetching the file url
 	$file_url = $task->GetFileUrl($_POST['task_id']);
-}catch(Exception $e){
-	echo '<i class="">Database Error: '.$e.'</i><br>';
+
+}
+catch(Exception $e)
+{
+
+	echo '<i class="">Database Error: '.$e->getMessage().'</i><br>';
+
 	exit;
+
 }
 
 //if edit button was pressed
-if(isset($_POST["task_edit_summit"])){
-    try{
-        //if user is logged in
-        if(isset($_SESSION['user_id'])){
-            //replace empty with null
-            if($_POST["name"] == ""){
-                $postname = NULL;
-            }else{
-                $postname = $_POST["name"];
-            }
-            if($_POST["description"] == ""){
-                $decs = NULL; 
-            }else{
-                $decs = $_POST["description"];
-            }
-            if($_POST["deadline"] == ""){
-                $deadline = NULL;
-            }else{
-                $deadline = strtotime($_POST["deadline"]);
-            }
-            if(isset($_FILES['upload']["name"]) AND $_FILES['upload']["name"] !== ""){
-                $upload = $_FILES['upload'];
-            }else{
-                $upload = NULL;
-            }
+if(isset($_POST["task_edit_summit"]))
+{
+
+    //if user is logged in
+    if(isset($_SESSION['user_id']))
+    {
+
+        //replace empty with null
+        if($_POST["name"] == "")
+        {
+
+            $postname = NULL;
+
+        }
+        else
+        {
+
+            $postname = $_POST["name"];
+
+        }
+
+        if($_POST["description"] == "")
+        {
+
+            $decs = NULL;
+
+        }
+        else
+        {
+
+            $decs = $_POST["description"];
+
+        }
+
+        if($_POST["deadline"] == "")
+        {
+
+            $deadline = NULL;
+
+        }
+        else
+        {
+
+            $deadline = strtotime($_POST["deadline"]);
+
+        }
+
+        if(isset($_FILES['upload']["name"]) AND $_FILES['upload']["name"] !== "")
+        {
+
+            $upload = $_FILES['upload'];
+
+        }
+        else
+        {
+
+            $upload = NULL;
+
+        }
+
+        try
+        {
+
             //call a fun
             $task->EditTask($_POST['task_id'], $postname, $decs, $deadline, $upload);
+
             ?>
-                <script>    
+            <script>
                 //change an url and reload
-                   if(typeof window.history.pushState == 'function'){
-                        window.history.pushState({}, "Hide", "/member.php");
-                        location.reload();
-                    }
-                </script> 
+                if(typeof window.history.pushState == 'function')
+                {
+                    window.history.pushState({}, "Hide", "/member.php");
+                    location.reload();
+                }
+            </script>
             <?php
-        }else{
-            //login page
-            header("Location: /login.php");
+
         }
-    }catch(Exception $e){
-        $message = $e->getMessage();
+        catch(Exception $e)
+        {
+
+            $message = $e->getMessage();
+
+        }
+
     }
+    else
+    {
+
+        //login page
+        header("Location: /login.php");
+
+    }
+
 }
+
 ?>
 <!DOCTYPE html>  
 <html lang="">
@@ -102,11 +169,16 @@ if(isset($_POST["task_edit_summit"])){
     <body>
         <div>
             <div>
-                <?php 
-				 //if error print it
-                    if(isset($message)){
+                <?php
+
+				    //if error print it
+                    if(isset($message))
+                    {
+
                         echo '<i class="">'.$message.'</i><br>';
+
                     }
+
                 ?>
             </div>
             <div>
@@ -119,7 +191,7 @@ if(isset($_POST["task_edit_summit"])){
                     <label for="deadline">Deadline:</label>
                     <input type="date" name="deadline" id="deadline" value="<?php if(!empty($_POST['deadline'])) echo date("Y-m-d", $_POST['deadline']); ?>" min="<?php echo date("Y-m-d"); ?>" max="2038-01-19"><br>
                     <label for="file">Upload Max(2 MB):</label>
-                    <input type="file" id="file" name="upload" accept="image/*, .txt, .xls,.xlsx, .pdf, .doc, .docx" onchange="FileSize()"><br>
+                    <input type="file" id="file" name="upload" onchange="FileSize()"><br>
                     <input type="submit" id="task_edit" name="task_edit_summit" value="Add!">
                 </form>
                 File (Uploading file will overwrite this):   					

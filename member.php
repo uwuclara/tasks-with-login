@@ -1,32 +1,47 @@
 <?php
+
 //session start
 session_start();
 
 //check if logged
-if(!isset($_SESSION['user_id'])){
+if(!isset($_SESSION['user_id']))
+{
+
     header("Location: /login.php");
+
 }
 
 //lib
-require_once('db.php');
+require_once __DIR__ ."/db.php";
 
-try{
+try
+{
+
 	//calling a class
 	$task = new Task();
+
 	//getting user's tasks
 	$user_tasks = $task->FetchTasks();
-}catch(Exception $e){
-	echo '<i class="">Database Error: '.$e.'</i><br>';
+
+}
+catch(Exception $e)
+{
+
+	echo '<i class="">Database Error: '.$e->getMessage().'</i><br>';
+
 	exit;
+
 }
 
 $num_task = 0;
 
 ?>
+
 <!DOCTYPE html>  
 <html lang="">
 	<script>
-        Disable_Download = (id) => {
+        Disable_Download = (id) =>
+        {
 			document.getElementById(id).disabled = true;
 		} 
 	</script>

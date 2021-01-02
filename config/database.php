@@ -1,10 +1,13 @@
 <?php
-//never use root
-$config = array(
-    'database_type' => '',
-    'database_name' => '',
-    'server' => '',
-    'username' => '',
-    'password' => ''
-);
+
+    //never use root (main acc)
+    $config = array
+    (
+        'database_type' => 'mysql',
+        'database_name' => 'ch',
+        'server' => 'localhost',
+        'username' => 'name',
+        'password' => 'pass'
+    );
+
 ?>

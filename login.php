@@ -3,43 +3,75 @@
 session_start();
 
 //check if logged
-if(isset($_SESSION['user_id'])){
+if(isset($_SESSION['user_id']))
+{
+
     //redirect to main member page
     header("Location: /member.php");
+
 }
 
 //lib
-require_once('db.php');
+require_once __DIR__ ."/db.php";
 
 //calling a class
-try{
+try
+{
+
 	$user = new User();
-}catch(Exception $e){
-	echo "<i>Database Error ".$e."</i><br>";
+
+}
+catch(Exception $e)
+{
+
+	echo "<i>Database Error ".$e->getMessage()."</i><br>";
+
 	exit;
+
 }
 
 //if login button been pressed
-if(isset($_POST["login_summit"])){    
+if(isset($_POST["login_summit"]))
+{
+
     //fields that are required
-    $data = array(  
+    $data = array
+    (
         'email'  =>   $_POST["email"],  
         'password'  =>   $_POST["password"]  
-    ); 
+    );
+
     //check if all required fields are not empty
-    if($user->Required($data) == true){
+    if($user->Required($data) == true)
+    {
+
         //calling a login fun
-        try{
+        try
+        {
+
             $user->Login($_POST["email"], $_POST["password"]);
-        }catch(Exception $e){
+
+        }
+        catch(Exception $e)
+        {
+
             $message = $e->getMessage();
-        }  
-    }else{
+
+        }
+
+    }
+    else
+    {
+
         //sets an error msg
         $message = $user->getError();
-    }  
+
+    }
+
 }
+
 ?>
+
 <!DOCTYPE html>  
 <html lang="">
     <head>
@@ -49,11 +81,16 @@ if(isset($_POST["login_summit"])){
         <div>
             <h2>Login:</h2>
             <div>
-                <?php 
+                <?php
+
                     //if error print it
-                    if(isset($message)){
+                    if(isset($message))
+                    {
+
                         echo '<i class="">'.$message.'</i><br>';
+
                     }
+
                 ?>
             </div>
             <div>

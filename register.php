@@ -3,52 +3,84 @@
 session_start();
 
 //check if logged in
-if(isset($_SESSION['user_name'])){
+if(isset($_SESSION['user_name']))
+{
+
     header("Location: /member.php");
+
 }
 
 //lib
-require_once('db.php');
+require_once __DIR__ ."/db.php";
 
-try{
+try
+{
+
 	//calling a class
 	$user = new User();
-}catch(Exception $e){
-	echo '<i class="">Database Error: '.$e.'</i><br>';
+
+}
+catch(Exception $e)
+{
+
+	echo '<i class="">Database Error: '.$e->getMessage().'</i><br>';
 	exit;
+
 }
 
 //if register button been pressed
-if(isset($_POST["register_summit"])){    
+if(isset($_POST["register_summit"]))
+{
+
     //required
-    $data = array(  
+    $data = array
+    (
         'first name'  =>   $_POST["first_name"],
         'last name'  =>   $_POST["last_name"],
         'email'  =>   $_POST["email"],
         'password'  =>   $_POST["password"],
         'password_repeat'  =>   $_POST["password_repeat"] 
-    ); 
+    );
+
     //check if required is not empty
-    if($user->Required($data) == true){
+    if($user->Required($data) == true)
+    {
+
         //calling a register fun
-        try{
+        try
+        {
+
             $user->Register($_POST["first_name"], $_POST["last_name"], $_POST["email"], $_POST["password"], $_POST["password_repeat"]);
-        }catch(Exception $e){
+
+        }
+        catch(Exception $e)
+        {
+
             $message = $e->getMessage();
-        }  
-    }else{  
+
+        }
+
+    }
+    else
+    {
+
         //if error
         $message = $user->getError();
-    }  
+
+    }
+
 }
+
 ?>
+
 <!DOCTYPE html>  
 <html lang="">
     <head>
         <title>Tasks with login</title>
         <script>    
             //just to clear
-            if(typeof window.history.pushState == 'function'){
+            if(typeof window.history.pushState == 'function')
+            {
                 window.history.pushState({}, "Hide", "/register.php");
             }
         </script> 
@@ -57,11 +89,15 @@ if(isset($_POST["register_summit"])){
         <div>
             <h2>Register:</h2>
             <div>
-                <?php 
+                <?php
+
                     //if error print it
-                    if(isset($message)){
+                    if(isset($message))
+                    {
                         echo '<i class="">'.$message.'</i></br>';
+
                     }
+
                 ?>
             </div>
             <div>

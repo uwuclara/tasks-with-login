@@ -1,0 +1,5 @@
+#deny accept to .htaccess file
+<Files .htaccess>
+    Order allow,deny
+    Deny from all
+</Files>

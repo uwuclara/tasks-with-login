@@ -1,4 +1,7 @@
--- phpMyAdmin SQL Dump
+-- SQL Dump
+--
+-- Generation Time: Jan 21, 2020 at 10:22 PM
+-- PHP Version: 7.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -23,8 +26,8 @@ CREATE TABLE `tasks` (
   `owner_id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
-  `deadline` int(11) DEFAULT NULL,
-  `file_id` int(11) DEFAULT NULL,
+  `deadline` bigint(20) DEFAULT NULL,
+  `file_id` int(300) DEFAULT NULL,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -40,7 +43,7 @@ CREATE TABLE `users` (
   `first_name` varchar(32) NOT NULL,
   `last_name` varchar(32) NOT NULL,
   `email` varchar(32) NOT NULL,
-  `password` varchar(60) NOT NULL,
+  `password` varchar(256) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

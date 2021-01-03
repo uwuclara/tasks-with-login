@@ -1258,11 +1258,11 @@ class Task extends User
 
     /**
      * Downloads user's file
-     * @param $url
+     * @param string $url
      * @return bool
      * @throws UserException
      */
-    public function DownloadFile($url)
+    public function DownloadFile(string $url)
     {
 
         if(!is_null($this->getID()))

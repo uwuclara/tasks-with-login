@@ -27,7 +27,7 @@ CREATE TABLE `tasks` (
   `name` varchar(32) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
   `deadline` bigint(20) DEFAULT NULL,
-  `file_id` int(300) DEFAULT NULL,
+  `file_id` varchar(300) DEFAULT NULL,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

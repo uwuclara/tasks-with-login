@@ -3,3 +3,12 @@
     Order allow,deny
     Deny from all
 </Files>
+
+#access prevent to template sql file
+<FilesMatch "\.sql">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+#index ignore
+IndexIgnore *
